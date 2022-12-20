@@ -11,7 +11,7 @@ public class UserDTO {
     private String name;
     private String password;
     private String email;
-    private String phone;
+    private int phone;
     private String address;
     private boolean isAdmin;
     private int id;
@@ -22,7 +22,7 @@ public class UserDTO {
 
     }
 
-    public UserDTO(String userId,String name,String password, String email,String phone,String address,boolean isAdmin,
+    public UserDTO(String userId,String name,String password, String email,int phone,String address,boolean isAdmin,
                    int id,Date createTime,Date updateTime){
         this.userId = userId;
         this.name = name;
