@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.IdolTicketing.mapper.BookMapper">
+
+    <insert id="createBook">
+        INSERT INTO book
+        (userId,category,name,bookState)
+        VALUES
+        (#{userId},#{category},#{name},'START')
+    </insert>
+
+    <select id="getBook" resultType="com.IdolTicketing.dto.BookDTO">
+        SELECT * FROM book where id=#{id};
+    </select>
+
+    <update id="cancelBook">
+        UPDATE book
+        SET
+        bookState = 'CANCEL'
+        WHERE
+        userId = #{userId}
+    </update>
+
+    <update id="completeBook">
+        UPDATE book
+        SET
+        bookState = 'COMPLETE'
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="scheduleExpiredBook">
+        UPDATE book
+        SET bookState = 'COMPLETE'
+        WHERE expireTime &lt; now()
+    </update>
+
+</mapper>
