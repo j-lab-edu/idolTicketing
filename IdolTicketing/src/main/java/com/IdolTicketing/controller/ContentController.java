@@ -25,7 +25,7 @@ public class ContentController {
     @PostMapping("")
     @LoginCheck(type = LoginCheck.Role.ADMIN)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity createGoods(String userId,
+    public ResponseEntity createContents(String userId,
                                       boolean isAdmin,
                                       @RequestBody ContentDTO contentDTO) {
         if (!isAdmin) {
@@ -58,7 +58,7 @@ public class ContentController {
 
     @DeleteMapping("delete")
     @LoginCheck(type = LoginCheck.Role.ADMIN)
-    public ResponseEntity<?> deleteGoods(String userId,
+    public ResponseEntity<?> deleteContents(String userId,
                                          boolean isAdmin,
                                          @RequestBody ContentDTO contentDTO) {
         if (userId.equals(contentDTO.getUserId())) {
@@ -86,7 +86,7 @@ public class ContentController {
 
     //키워드 조회
     @GetMapping("selects")
-    public ResponseEntity<List<ContentDTO>> selectGoods(@RequestParam(value = "keyword", required = false) String keyword,
+    public ResponseEntity<List<ContentDTO>> selectContents(@RequestParam(value = "keyword", required = false) String keyword,
                                                         @RequestParam(value = "category", required = false) category category,
                                                         @RequestParam(value = "limitCount", required = false) int limitCount,
                                                         @RequestParam(value = "sortType", required = false) String sortType,
