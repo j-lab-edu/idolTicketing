@@ -44,6 +44,7 @@ public class UserController {
         UserDTO userInfo = userService.login(userDTO);
         if (userInfo == null) {
             throw new CUserNotFoundException("없는 회원입니다.");
+
         }
         if (!userInfo.isAdmin()) {
             SessionUtil.setLoginUserId(session, userInfo.getUserId());
