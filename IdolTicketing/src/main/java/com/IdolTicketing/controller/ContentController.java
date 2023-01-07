@@ -22,8 +22,8 @@ public class ContentController {
         this.contentService = contentService;
     }
 
-    @PostMapping("")
-    @LoginCheck(type = LoginCheck.Role.ADMIN)
+    @PostMapping("/")
+    @LoginCheck(types = {LoginCheck.Role.USER, LoginCheck.Role.ADMIN})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity createContents(String userId,
                                       boolean isAdmin,
@@ -39,13 +39,13 @@ public class ContentController {
         }
     }
 
-    @PatchMapping("update")
-    @LoginCheck(type = LoginCheck.Role.ADMIN)
+    @PatchMapping("/{id}")
+    @LoginCheck(types = {LoginCheck.Role.USER, LoginCheck.Role.ADMIN})
     public ResponseEntity<?> patchContent(String userId,
                                           boolean isAdmin,
                                           @RequestBody ContentDTO contentDTO) {
 
-        if (userId.equals(contentDTO.getUserId())) {
+        if (!isAdmin) {
             contentService.patchContent(contentDTO);
         } else {
             return new ResponseEntity<>(AdminResponseDTO.builder()
@@ -56,12 +56,12 @@ public class ContentController {
         return new ResponseEntity<>("수정되었습니다.", HttpStatus.OK);
     }
 
-    @DeleteMapping("delete")
-    @LoginCheck(type = LoginCheck.Role.ADMIN)
+    @DeleteMapping("/{id}")
+    @LoginCheck(types = {LoginCheck.Role.USER, LoginCheck.Role.ADMIN})
     public ResponseEntity<?> deleteContents(String userId,
                                          boolean isAdmin,
                                          @RequestBody ContentDTO contentDTO) {
-        if (userId.equals(contentDTO.getUserId())) {
+        if (!isAdmin) {
             contentService.deleteContent(contentDTO);
         } else {
             return new ResponseEntity<>(AdminResponseDTO.builder()
@@ -72,8 +72,7 @@ public class ContentController {
         return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
     }
 
-    //이름 조회
-    @GetMapping("{name}")
+    @GetMapping("/{name}")
     public ResponseEntity<?> getContent(String userId,
                                         boolean isAdmin,
                                         @RequestParam String name) {
@@ -84,8 +83,7 @@ public class ContentController {
         return new ResponseEntity<>(contentService.getContent(name), HttpStatus.OK);
     }
 
-    //키워드 조회
-    @GetMapping("selects")
+    @GetMapping("/search")
     public ResponseEntity<List<ContentDTO>> selectContents(@RequestParam(value = "keyword", required = false) String keyword,
                                                         @RequestParam(value = "category", required = false) category category,
                                                         @RequestParam(value = "limitCount", required = false) int limitCount,

@@ -20,8 +20,7 @@
         date = #{date},
         seat = #{seat},
         deadLine = #{deadLine}
-        WHERE
-        id = #{id}
+        WHERE id = #{id}
     </update>
 
     <select id="selectCategory" resultType="com.IdolTicketing.dto.ContentDTO">
@@ -30,8 +29,7 @@
 
     <delete id="deleteContent">
         DELETE FROM content
-        WHERE
-        id = #{id}
+        WHERE id = #{id}
     </delete>
 
     <select id="getContent" resultType="com.IdolTicketing.dto.ContentDTO">
@@ -40,14 +38,12 @@
 
     <select id="selectContents" resultType="map">
         SELECT * FROM content
-        where
-        1=1
-        <if test="keyword != null">
+        where category=#{category}
+        <choose>
+        <when test="keyword != null">
             and name like CONCAT('%',#{keyword},'%')
-        </if>
-        <if test="category != null">
-            and category=#{category}
-        </if>
+        </when>
+        </choose>
         ORDER BY #{sortType} ${upDownType}
         LIMIT #{limitCount}
     </select>
