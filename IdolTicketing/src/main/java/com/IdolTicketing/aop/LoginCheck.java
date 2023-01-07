@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface LoginCheck {
-    enum Role{
-        USER,ADMIN
+    enum Role {
+        USER, ADMIN
     }
     Role type();
 }
