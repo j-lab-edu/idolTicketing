@@ -31,8 +31,4 @@ public class HelpServiceImpl implements HelpService {
         return helpMapper.getBoard(id);
     }
 
-    @Override
-    public int deleteBoardAdmin(HelpDTO helpDTO) {
-        return helpMapper.deleteBoardAdmin(helpDTO);
-    }
 }
