@@ -13,5 +13,4 @@ public interface HelpMapper {
 
     int deleteBoard(HelpDTO helpDTO);
 
-    int deleteBoardAdmin(HelpDTO helpDTO);
 }

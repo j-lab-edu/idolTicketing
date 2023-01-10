@@ -4,35 +4,26 @@
 <mapper namespace="com.IdolTicketing.mapper.HelpMapper">
     <insert id="createBoard">
         insert into help
-        (title,description,userId,isAdmin)
+        (title, description, userId, isAdmin)
         VALUES
-        (#{title},#{description},#{userId},#{isAdmin})
+        (#{title}, #{description}, #{userId}, #{isAdmin})
     </insert>
 
     <select id="getBoard" resultType="com.IdolTicketing.dto.HelpDTO">
-        SELECT title,description,userId
+        SELECT title, description, userId
         from help
         where id =#{id}
     </select>
 
     <update id="updateBoard">
         UPDATE help
-        SET
-        title=#{title},
-        description = #{description}
-        WHERE
-        userId = #{userId}
+        SET title = #{title}, description = #{description}
+        WHERE userId = #{userId}
     </update>
 
     <delete id="deleteBoard">
         DELETE from help
-        WHERE
-        id = #{id}
+        WHERE id = #{id}
     </delete>
 
-    <delete id="deleteBoardAdmin">
-        DELETE from help
-        WHERE
-        id = #{id}
-    </delete>
 </mapper>

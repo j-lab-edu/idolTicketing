@@ -11,5 +11,4 @@ public interface HelpService {
 
     HelpDTO getBoard(int id);
 
-    int deleteBoardAdmin(HelpDTO helpDTO);
 }
