@@ -2,6 +2,7 @@ package com.IdolTicketing.dto;
 
 import lombok.Builder;
 import lombok.Data;
+
 import java.util.Date;
 
 @Data
@@ -18,12 +19,12 @@ public class UserDTO {
     private Date createTime;
     private Date updateTime;
 
-    public UserDTO(){
+    public UserDTO() {
 
     }
 
-    public UserDTO(String userId,String name,String password, String email,int phone,String address,boolean isAdmin,
-                   int id,Date createTime,Date updateTime){
+    public UserDTO(String userId, String name, String password, String email, int phone, String address, boolean isAdmin,
+                   int id, Date createTime, Date updateTime) {
         this.userId = userId;
         this.name = name;
         this.password = password;

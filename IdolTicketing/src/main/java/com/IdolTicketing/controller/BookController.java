@@ -24,12 +24,13 @@ public class BookController {
     public ResponseEntity createBook(String userId,
                                      boolean isAdmin,
                                      @RequestBody BookDTO bookDTO) {
+
         if (userId.equals(bookDTO.getUserId())) {
             bookService.createBook(bookDTO);
         } else {
             return new ResponseEntity<>("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("예약되었습니다.", HttpStatus.OK);
+        return new ResponseEntity<>("예매되었습니다.", HttpStatus.OK);
     }
 
     @PatchMapping("/cancel")

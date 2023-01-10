@@ -4,6 +4,7 @@ import com.IdolTicketing.SessionUtil;
 import com.IdolTicketing.aop.LoginCheck;
 import com.IdolTicketing.dto.UserDTO;
 import com.IdolTicketing.dto.UserResponseDTO;
+import com.IdolTicketing.exception.CUserNotFoundException;
 import com.IdolTicketing.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,10 +43,8 @@ public class UserController {
                                    HttpSession session) {
         UserDTO userInfo = userService.login(userDTO);
         if (userInfo == null) {
-            return new ResponseEntity<>(UserResponseDTO.builder()
-                    .code(401)
-                    .massage("다시 로그인해주세요")
-                    .build(), HttpStatus.BAD_REQUEST);
+            throw new CUserNotFoundException("없는 회원입니다.");
+
         }
         if (!userInfo.isAdmin()) {
             SessionUtil.setLoginUserId(session, userInfo.getUserId());
@@ -70,9 +69,9 @@ public class UserController {
             return new ResponseEntity<>(UserResponseDTO.builder()
                     .code(402)
                     .massage("실패했습니다.")
-                    .build(),HttpStatus.BAD_REQUEST);
+                    .build(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(userDTO,HttpStatus.OK);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @PatchMapping("/logout")
@@ -85,7 +84,7 @@ public class UserController {
             SessionUtil.clear(session);
         } else {
             return new ResponseEntity<>(UserResponseDTO.builder()
-                    .code(401)
+                    .code(402)
                     .massage("실패했습니다.")
                     .build(), HttpStatus.BAD_REQUEST);
         }
@@ -101,7 +100,7 @@ public class UserController {
             userService.delete(userDTO);
         } else {
             return new ResponseEntity<>(UserResponseDTO.builder()
-                    .code(401)
+                    .code(402)
                     .massage("실패했습니다.")
                     .build(), HttpStatus.BAD_REQUEST);
         }
