@@ -23,7 +23,7 @@ public class ContentController {
     }
 
     @PostMapping("/")
-    @LoginCheck(type = LoginCheck.Role.ADMIN)
+    @LoginCheck(types= LoginCheck.Role.ADMIN)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity createContents(String userId,
                                       boolean isAdmin,
@@ -40,7 +40,7 @@ public class ContentController {
     }
 
     @PatchMapping("/{id}")
-    @LoginCheck(type = LoginCheck.Role.ADMIN)
+    @LoginCheck(types = LoginCheck.Role.ADMIN)
     public ResponseEntity<?> patchContent(String userId,
                                           boolean isAdmin,
                                           @RequestBody ContentDTO contentDTO) {
@@ -57,7 +57,7 @@ public class ContentController {
     }
 
     @DeleteMapping("/{id}")
-    @LoginCheck(type = LoginCheck.Role.ADMIN)
+    @LoginCheck(types = LoginCheck.Role.ADMIN)
     public ResponseEntity<?> deleteContents(String userId,
                                          boolean isAdmin,
                                          @RequestBody ContentDTO contentDTO) {

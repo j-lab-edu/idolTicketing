@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/books")
+@RequestMapping("/books")
 public class BookController {
 
     private final BookService bookService;
@@ -18,8 +18,8 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @PostMapping("")
-    @LoginCheck(type = LoginCheck.Role.USER)
+    @PostMapping("/")
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity createBook(String userId,
                                      boolean isAdmin,
@@ -34,7 +34,7 @@ public class BookController {
     }
 
     @PatchMapping("/cancel")
-    @LoginCheck(type = LoginCheck.Role.USER)
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity cancelBook(String userId,
                                      boolean isAdmin,
                                      @RequestBody BookDTO bookDTO) {
@@ -47,7 +47,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    @LoginCheck(type = LoginCheck.Role.USER)
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity getBook(String userId,
                                   boolean isAdmin,
                                   @PathVariable int id) {
@@ -56,7 +56,7 @@ public class BookController {
     }
 
     @PatchMapping("/complete/{id}")
-    @LoginCheck(type = LoginCheck.Role.USER)
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity completeBook(String userId,
                                        boolean isAdmin,
                                        @PathVariable int id) {
