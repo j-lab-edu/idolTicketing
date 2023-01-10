@@ -47,7 +47,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
+    @LoginCheck(types = {LoginCheck.Role.USER})
     public ResponseEntity getBook(String userId,
                                   boolean isAdmin,
                                   @PathVariable int id) {
