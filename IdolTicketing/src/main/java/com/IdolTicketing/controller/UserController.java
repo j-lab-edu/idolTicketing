@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  * RESTController는 HTML 코드를 전송하는 페이지에 비해 구조가 간단하다.(단순한 텍스트로 정보를 전송하기 떄문에)
  */
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -41,11 +41,12 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO userDTO,
                                    HttpSession session) {
-        UserDTO userInfo = userService.login(userDTO);
-        if (userInfo == null) {
-            throw new CUserNotFoundException("없는 회원입니다.");
 
-        }
+        UserDTO userInfo = userService.login(userDTO);
+
+        if (userInfo == null)
+            throw new CUserNotFoundException(401);
+
         if (!userInfo.isAdmin()) {
             SessionUtil.setLoginUserId(session, userInfo.getUserId());
             return new ResponseEntity<>(UserResponseDTO.builder()
@@ -58,24 +59,24 @@ public class UserController {
                 .massage("ADMIN").build(), HttpStatus.OK);
     }
 
-    @PatchMapping("/update")
-    @LoginCheck(type = LoginCheck.Role.USER)
+    @PatchMapping("/{id}")
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity<?> update(String userId,
                                     boolean isAdmin,
                                     @RequestBody UserDTO userDTO) {
-        if (userId.equals(userDTO.getUserId())) {
+        if (userId.equals(userDTO.getUserId()))
             userService.update(userDTO);
-        } else {
+        else
             return new ResponseEntity<>(UserResponseDTO.builder()
                     .code(402)
                     .massage("실패했습니다.")
                     .build(), HttpStatus.BAD_REQUEST);
-        }
+
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @PatchMapping("/logout")
-    @LoginCheck(type = LoginCheck.Role.USER)
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity<?> logout(String userId,
                                     boolean isAdmin,
                                     HttpSession session,
@@ -91,8 +92,8 @@ public class UserController {
         return new ResponseEntity<>("로그아웃 되었습니다.", HttpStatus.OK);
     }
 
-    @DeleteMapping("delete")
-    @LoginCheck(type = LoginCheck.Role.USER)
+    @DeleteMapping("/{id}")
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity<?> delete(String userId,
                                     boolean isAdmin,
                                     @RequestBody UserDTO userDTO) {
@@ -107,14 +108,14 @@ public class UserController {
         return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
     }
 
-    @GetMapping("myInfo")
+    @GetMapping("/myInfo")
     public ResponseEntity<UserDTO> userInfo(HttpSession session) {
         String userId = SessionUtil.getLoginUserId(session);
         UserDTO userInfo = userService.getUserInfo(userId);
         return new ResponseEntity<>((userInfo), HttpStatus.OK);
     }
 
-    @GetMapping("sessionExpire")
+    @GetMapping("/sessionExpire")
     public void sessionExpire(HttpSession session) {
         SessionUtil.clear(session);
     }

@@ -25,6 +25,7 @@ import java.util.Collections;
 @Log4j2
 @SuppressWarnings("unchecked")
 public class AuthCheckAspect {
+
     @Autowired
     private UserService userService;
 
@@ -38,24 +39,24 @@ public class AuthCheckAspect {
 
         boolean isAdmin = false;
 
-        String userType = loginCheck.type().toString();
-        switch (userType) {
-            case "ADMIN": {
-                isAdmin = true;
-                sessionUserId = SessionUtil.getLoginAdminId(session);
-                break;
-            }
-            case "USER": {
-                isAdmin = false;
-                sessionUserId = SessionUtil.getLoginUserId(session);
-                break;
-            }
+        String userType = loginCheck.types().toString();
+
+        if (SessionUtil.getLoginUserId(session) == null) {
+            LoginCheck.Role USER = loginCheck.types()[1];
+            isAdmin = false;
+            sessionUserId = SessionUtil.getLoginUserId(session);
+        } else {
+            LoginCheck.Role ADMIN = loginCheck.types()[0];
+            isAdmin = true;
+            sessionUserId = SessionUtil.getLoginAdminId(session);
         }
-        if ( Collections.list(((StandardSessionFacade) session).getAttributeNames()).size() > 0) {
+
+        if (Collections.list(((StandardSessionFacade) session).getAttributeNames()).size() > 0) {
             if (sessionUserId == null) {
                 return new ResponseEntity<>(" 권한이 없습니다. ", HttpStatus.UNAUTHORIZED);
             }
-        } {
+        }
+        {
             if (sessionUserId == null) {
                 return new ResponseEntity<>("로그인해주세요2", HttpStatus.BAD_REQUEST);
             }

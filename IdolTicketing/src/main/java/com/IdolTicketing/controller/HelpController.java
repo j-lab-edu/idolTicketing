@@ -17,39 +17,40 @@ public class HelpController {
         this.helpService = helpService;
     }
 
-    @PostMapping("")
+    @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    @LoginCheck(type = LoginCheck.Role.USER)
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity helpBoard(String userId,
                                     boolean isAdmin,
                                     @RequestBody HelpDTO helpDTO) {
-        if (userId.equals(helpDTO.getUserId())) {
+        if (userId.equals(helpDTO.getUserId()))
             helpService.helpBoard(helpDTO);
-        } else {
+         else
             return new ResponseEntity("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
-        }
+
         return new ResponseEntity<>(helpDTO, HttpStatus.OK);
     }
 
-    @PatchMapping("update")
-    @LoginCheck(type = LoginCheck.Role.USER)
+    @PatchMapping("/{id}")
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity updateBoard(String userId,
                                       boolean isAdmin,
+                                      @PathVariable int id,
                                       @RequestBody HelpDTO helpDTO) {
-        if (userId.equals(helpDTO.getUserId())) {
+        if (userId.equals(helpDTO.getUserId()))
             helpService.updateBoard(helpDTO);
-        } else {
+        else
             return new ResponseEntity("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
-        }
+
         return new ResponseEntity<>(helpDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete")
-    @LoginCheck(type = LoginCheck.Role.USER)
+    @DeleteMapping("/{deleteAdmin}")
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity deleteBoard(String userId,
-                                      boolean isAdmin,
-                                      @RequestBody HelpDTO helpDTO) {
-        if (userId.equals(helpDTO.getUserId())) {
+                                           boolean isAdmin,
+                                           @RequestBody HelpDTO helpDTO) {
+        if (userId.equals(helpDTO.getUserId())&&isAdmin){
             helpService.deleteBoard(helpDTO);
         } else {
             return new ResponseEntity("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
@@ -57,25 +58,14 @@ public class HelpController {
         return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteAdmin")
-    @LoginCheck(type = LoginCheck.Role.ADMIN)
-    public ResponseEntity deleteBoardAdmin(String userId,
-                                           boolean isAdmin,
-                                           @RequestBody HelpDTO helpDTO) {
-        if (userId.equals(helpDTO.getUserId())&&isAdmin){
-            helpService.deleteBoardAdmin(helpDTO);
-        } else {
-            return new ResponseEntity("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
-    @LoginCheck(type = LoginCheck.Role.USER)
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity getBoard(String userId,
                                    boolean isAdmin,
                                    @PathVariable int id) {
-
+        if(id == 0 ){
+            return new ResponseEntity<>("없는 정보입니다.",HttpStatus.BAD_REQUEST);
+        }else
         return new ResponseEntity<>((helpService.getBoard(id)), HttpStatus.OK);
     }
 
