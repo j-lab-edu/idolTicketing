@@ -69,7 +69,7 @@ public class UserController {
         else
             return new ResponseEntity<>(UserResponseDTO.builder()
                     .code(402)
-                    .massage("실패했습니다.")
+                    .massage("잘못된 접근입니다.")
                     .build(), HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
@@ -86,7 +86,7 @@ public class UserController {
         } else {
             return new ResponseEntity<>(UserResponseDTO.builder()
                     .code(402)
-                    .massage("실패했습니다.")
+                    .massage("잘못된 접근입니다.")
                     .build(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("로그아웃 되었습니다.", HttpStatus.OK);
@@ -102,7 +102,7 @@ public class UserController {
         } else {
             return new ResponseEntity<>(UserResponseDTO.builder()
                     .code(402)
-                    .massage("실패했습니다.")
+                    .massage("잘못된 접근입니다.")
                     .build(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);

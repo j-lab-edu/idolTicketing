@@ -30,8 +30,8 @@ public class ContentController {
                                       @RequestBody ContentDTO contentDTO) {
         if (!isAdmin) {
             return new ResponseEntity<>(AdminResponseDTO.builder()
-                    .code(403)
-                    .massage("관리자가 아닙니다.")
+                    .code(402)
+                    .massage("잘못된 접근입니다.")
                     .build(), HttpStatus.BAD_REQUEST);
         } else {
             contentService.createContent(contentDTO);
@@ -49,8 +49,8 @@ public class ContentController {
             contentService.patchContent(contentDTO);
         } else {
             return new ResponseEntity<>(AdminResponseDTO.builder()
-                    .code(403)
-                    .massage("관리자가 아닙니다.")
+                    .code(402)
+                    .massage("잘못된 접근입니다.")
                     .build(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("수정되었습니다.", HttpStatus.OK);
@@ -65,8 +65,8 @@ public class ContentController {
             contentService.deleteContent(contentDTO);
         } else {
             return new ResponseEntity<>(AdminResponseDTO.builder()
-                    .code(403)
-                    .massage("관리자가 아닙니다.")
+                    .code(402)
+                    .massage("잘못된 접근입니다.")
                     .build(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
