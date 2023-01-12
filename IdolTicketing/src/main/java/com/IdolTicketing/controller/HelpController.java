@@ -57,19 +57,6 @@ public class HelpController {
         return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteAdmin")
-    @LoginCheck(type = LoginCheck.Role.ADMIN)
-    public ResponseEntity deleteBoardAdmin(String userId,
-                                           boolean isAdmin,
-                                           @RequestBody HelpDTO helpDTO) {
-        if (userId.equals(helpDTO.getUserId())&&isAdmin){
-            helpService.deleteBoardAdmin(helpDTO);
-        } else {
-            return new ResponseEntity("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     @LoginCheck(type = LoginCheck.Role.USER)
     public ResponseEntity getBoard(String userId,
