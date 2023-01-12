@@ -44,14 +44,13 @@ class HelpControllerTest {
                 .userId("test")
                 .description("....")
                 .title("sample")
+                .isAdmin(false)
                 .build();
         String helpString = objectMapper.writeValueAsString(helpDTO);
 
         MvcResult result = mockMvc.perform(post("/helps/")
-                        .param("userId", "test")
-                        .param("isAdmin", "false")
-                        .param("title", "sample")
-                        .param("description", "....")
+                        .param("userId","test")
+                        .param("isAdmin","false")
                         .content(helpString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
@@ -74,10 +73,8 @@ class HelpControllerTest {
         String helpString = objectMapper.writeValueAsString(helpDTO);
 
         MvcResult result = mockMvc.perform(post("/helps/")
-                        .param("userId", "test")
-                        .param("isAdmin", "false")
-                        .param("title", "sample")
-                        .param("description", "....")
+                        .param("userId","test")
+                        .param("isAdmin","false")
                         .content(helpString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
@@ -98,10 +95,8 @@ class HelpControllerTest {
         String helpString = objectMapper.writeValueAsString(helpDTO);
 
         MvcResult result = mockMvc.perform(patch("/helps/01")
-                        .param("userId", "test")
-                        .param("isAdmin", "false")
-                        .param("id", "01")
-                        .param("title", "sample")
+                        .param("userId","test")
+                        .param("isAdmin","false")
                         .content(helpString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
@@ -125,10 +120,8 @@ class HelpControllerTest {
         String helpString = objectMapper.writeValueAsString(helpDTO);
 
         MvcResult result = mockMvc.perform(patch("/helps/01")
-                        .param("userId", "test")
-                        .param("isAdmin", "false")
-                        .param("id", "02")
-                        .param("title", "sample")
+                        .param("userId","test")
+                        .param("isAdmin","false")
                         .content(helpString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
