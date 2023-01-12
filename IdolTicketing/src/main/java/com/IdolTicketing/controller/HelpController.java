@@ -44,7 +44,7 @@ public class HelpController {
         return new ResponseEntity<>(helpDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete")
+    @DeleteMapping("/{id}")
     @LoginCheck(type = LoginCheck.Role.USER)
     public ResponseEntity deleteBoard(String userId,
                                       boolean isAdmin,
