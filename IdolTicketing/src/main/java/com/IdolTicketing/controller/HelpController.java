@@ -31,7 +31,7 @@ public class HelpController {
         return new ResponseEntity<>(helpDTO, HttpStatus.OK);
     }
 
-    @PatchMapping("update")
+    @PatchMapping("/{id}")
     @LoginCheck(type = LoginCheck.Role.USER)
     public ResponseEntity updateBoard(String userId,
                                       boolean isAdmin,
