@@ -18,8 +18,7 @@
         phone = #{phone},
         address = #{address},
         password = #{password}
-        WHERE
-        userId = #{userId}
+        WHERE userId = #{userId}
     </update>
 
     <select id="loginUser" resultType="com.IdolTicketing.dto.UserDTO">

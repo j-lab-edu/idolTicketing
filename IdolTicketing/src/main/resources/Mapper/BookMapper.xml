@@ -16,18 +16,14 @@
 
     <update id="cancelBook">
         UPDATE book
-        SET
-        bookState = 'CANCEL'
-        WHERE
-        userId = #{userId}
+        SET bookState = 'CANCEL'
+        WHERE userId = #{userId}
     </update>
 
     <update id="completeBook">
         UPDATE book
-        SET
-        bookState = 'COMPLETE'
-        WHERE
-        id = #{id}
+        SET bookState = 'COMPLETE'
+        WHERE id = #{id}
     </update>
 
     <update id="scheduleExpiredBook">
