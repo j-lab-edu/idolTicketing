@@ -1,0 +1,4 @@
+# exception_ko.yml
+unKnown:
+  code: "402"
+  msg: "잘못된 접근입니다 ."
