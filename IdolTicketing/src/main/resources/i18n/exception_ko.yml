@@ -2,3 +2,14 @@
 unKnown:
   code: "402"
   msg: "잘못된 접근입니다 ."
+
+books :
+  name : "아스트로"
+contents :
+  name:  "아스트로"
+  location: "용인"
+  seat: "가"
+helps :
+  title : "문의"
+users :
+  address : "용인"

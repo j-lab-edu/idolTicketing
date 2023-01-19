@@ -4,25 +4,31 @@ import com.IdolTicketing.dto.HelpDTO;
 import com.IdolTicketing.mapper.HelpMapper;
 import com.IdolTicketing.service.HelpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class HelpServiceImpl implements HelpService {
     @Autowired
     HelpMapper helpMapper;
+    private MessageSource messageSource;
 
     @Override
     public int helpBoard(HelpDTO helpDTO) {
+        helpDTO.setTitle(messageSource.getMessage("helps.title", null, LocaleContextHolder.getLocale()));
         return helpMapper.createBoard(helpDTO);
     }
 
     @Override
     public int updateBoard(HelpDTO helpDTO) {
+        helpDTO.setTitle(messageSource.getMessage("helps.title", null, LocaleContextHolder.getLocale()));
         return helpMapper.updateBoard(helpDTO);
     }
 
     @Override
     public int deleteBoard(HelpDTO helpDTO) {
+        helpDTO.setTitle(messageSource.getMessage("helps.title", null, LocaleContextHolder.getLocale()));
         return helpMapper.deleteBoard(helpDTO);
     }
 
