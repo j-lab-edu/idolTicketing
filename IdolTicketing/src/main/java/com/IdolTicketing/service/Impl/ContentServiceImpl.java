@@ -2,6 +2,10 @@ package com.IdolTicketing.service.Impl;
 
 import com.IdolTicketing.dto.ContentDTO;
 import com.IdolTicketing.dto.ContentSearchDTO;
+import com.IdolTicketing.exception.CCategoryNotFoundException;
+import com.IdolTicketing.exception.CDescriptionNotFound;
+import com.IdolTicketing.exception.CNameNotFoundException;
+import com.IdolTicketing.exception.CSeatNotFound;
 import com.IdolTicketing.mapper.ContentMapper;
 import com.IdolTicketing.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,15 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public int createContent(ContentDTO contentDTO) {
+        if (contentDTO.getCategory() == null)
+            throw new CCategoryNotFoundException("");
+        else if (contentDTO.getName() == null)
+            throw new CNameNotFoundException("");
+        else if (contentDTO.getDescription() == null)
+            throw new CDescriptionNotFound("");
+        else if (contentDTO.getSeat() == null)
+            throw new CSeatNotFound("");
+
         return contentMapper.createContent(contentDTO);
     }
 

@@ -25,9 +25,9 @@ public class BookServiceImpl implements BookService {
         bookDTO.setExpireTime(contentDTO.getDeadLine());
         //bookDTO.setName(messageSource.getMessage("books.name", null, LocaleContextHolder.getLocale()));
         if(bookDTO.getCategory()==null){
-            throw new CCategoryNotFoundException ("805 category 정보가 부족합니다.");
+            throw new CCategoryNotFoundException ("");
         }else if(bookDTO.getName()==null){
-            throw new CNameNotFoundException("806 name 정보가 부족합니다.");
+            throw new CNameNotFoundException("");
         }
         return bookMapper.createBook(bookDTO);
     }

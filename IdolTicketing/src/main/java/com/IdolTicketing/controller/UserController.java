@@ -45,7 +45,7 @@ public class UserController {
         UserDTO userInfo = userService.login(userDTO);
 
         if (userInfo == null) // 1. DB MYSQL 데이터가 없는 경우.
-            throw new CUserNotFoundException(801);
+            throw new CUserNotFoundException("");
 
         if (!userInfo.isAdmin()) {
             SessionUtil.setLoginUserId(session, userInfo.getUserId());

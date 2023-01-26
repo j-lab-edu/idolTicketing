@@ -1,0 +1,33 @@
+# exception_ko.yml
+
+#book
+CCategory:
+  msg : "category 정보가 부족합니다."
+  code : "805"
+CName:
+  msg : "name 정보가 부족합니다."
+  code : "806"
+#user
+CUser :
+  msg : "회원 정보가 없습니다."
+  code : "801"
+CNLogin :
+  msg : "로그인을 해주세요."
+  code : "800"
+CNAdmin :
+  msg : "관리자가 아닙니다."
+  code : "802"
+unKnown:
+  code: "803"
+  msg: "일반 유저는 불가능한 접근입니다."
+#content
+CDescription :
+  msg : "description 정보가 없습니다."
+  code : "804"
+CSeat :
+  msg : "seat 정보가 없습니다."
+  code : "807"
+#help
+CTitle :
+  code : "808"
+  msg : "title 정보가 없습니다."
