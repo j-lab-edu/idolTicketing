@@ -1,18 +1,11 @@
 # exception_en.yml
-unKnown:
-  code: "402"
-  msg: "it is a wrong approach."
-
 books:
-  name : "astro"
+  name : "super junior"
 contents :
-  name:  "astro"
+  name:  "super junior"
   location: "Yong-In"
   seat: "A"
 helps :
- title : "help"
+  title : "help me"
 users :
   address : "Yong-In"
-
-
-

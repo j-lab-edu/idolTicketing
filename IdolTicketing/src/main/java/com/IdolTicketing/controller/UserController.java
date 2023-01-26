@@ -44,18 +44,18 @@ public class UserController {
 
         UserDTO userInfo = userService.login(userDTO);
 
-        if (userInfo == null)
-            throw new CUserNotFoundException(401);
+        if (userInfo == null) // 1. DB MYSQL 데이터가 없는 경우.
+            throw new CUserNotFoundException("");
 
         if (!userInfo.isAdmin()) {
             SessionUtil.setLoginUserId(session, userInfo.getUserId());
             return new ResponseEntity<>(UserResponseDTO.builder()
-                    .code(201)
+                    .code(601)
                     .massage("USER").build(), HttpStatus.OK);
         } else
             SessionUtil.setLoginAdminId(session, userInfo.getUserId());
         return new ResponseEntity<>(UserResponseDTO.builder()
-                .code(202)
+                .code(602)
                 .massage("ADMIN").build(), HttpStatus.OK);
     }
 

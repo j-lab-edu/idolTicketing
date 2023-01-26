@@ -1,15 +1,45 @@
 # exception_ko.yml
-unKnown:
-  code: "402"
-  msg: "잘못된 접근입니다 ."
-
-books :
-  name : "아스트로"
-contents :
-  name:  "아스트로"
+#i18n
+books:
+  name: "슈퍼주니어"
+contents:
+  name: "슈퍼주니어"
   location: "용인"
   seat: "가"
-helps :
-  title : "문의"
-users :
-  address : "용인"
+helps:
+  title: "문의합니다."
+users:
+  address: "용인"
+
+#book
+CCategory:
+  msg : "category 정보가 부족합니다."
+  code : "805"
+CName:
+  msg : "name 정보가 부족합니다."
+  code : "806"
+#user
+CUser :
+  msg : "회원 정보가 없습니다."
+  code : "801"
+CNLogin :
+  msg : "로그인을 해주세요."
+  code : "800"
+CNAdmin :
+  msg : "관리자가 아닙니다."
+  code : "802"
+unKnown:
+  code: "803"
+  msg: "일반 유저는 불가능한 접근입니다."
+#content
+CDescription :
+  msg : "description 정보가 없습니다."
+  code : "804"
+CSeat :
+  msg : "seat 정보가 없습니다."
+  code : "807"
+#help
+CTitle :
+  code : "808"
+  msg : "title 정보가 없습니다."
+

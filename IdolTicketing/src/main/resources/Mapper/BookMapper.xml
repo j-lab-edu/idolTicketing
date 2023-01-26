@@ -5,9 +5,9 @@
 
     <insert id="createBook">
         INSERT INTO book
-        (userId,category,name,bookState)
+        (userId,category,name,bookState,expireTime)
         VALUES
-        (#{userId},#{category},#{name},'START')
+        (#{userId},#{category},#{name},'START',#{expireTime})
     </insert>
 
     <select id="getBook" resultType="com.IdolTicketing.dto.BookDTO">

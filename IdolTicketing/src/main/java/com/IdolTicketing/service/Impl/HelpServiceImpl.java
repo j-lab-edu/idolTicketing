@@ -1,6 +1,8 @@
 package com.IdolTicketing.service.Impl;
 
 import com.IdolTicketing.dto.HelpDTO;
+import com.IdolTicketing.exception.CDescriptionNotFound;
+import com.IdolTicketing.exception.CTitleNotFound;
 import com.IdolTicketing.mapper.HelpMapper;
 import com.IdolTicketing.service.HelpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,12 @@ public class HelpServiceImpl implements HelpService {
 
     @Override
     public int helpBoard(HelpDTO helpDTO) {
-        helpDTO.setTitle(messageSource.getMessage("helps.title", null, LocaleContextHolder.getLocale()));
+        if(helpDTO.getDescription()==null)
+            throw new CDescriptionNotFound("");
+        else if(helpDTO.getTitle()==null)
+            throw new CTitleNotFound("");
+
+        helpDTO.setTitle(messageSource.getMessage("helptitle", null, LocaleContextHolder.getLocale()));
         return helpMapper.createBoard(helpDTO);
     }
 
@@ -28,7 +35,6 @@ public class HelpServiceImpl implements HelpService {
 
     @Override
     public int deleteBoard(HelpDTO helpDTO) {
-        helpDTO.setTitle(messageSource.getMessage("helps.title", null, LocaleContextHolder.getLocale()));
         return helpMapper.deleteBoard(helpDTO);
     }
 
