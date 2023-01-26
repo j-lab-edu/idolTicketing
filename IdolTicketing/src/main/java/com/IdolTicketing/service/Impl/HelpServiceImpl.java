@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class HelpServiceImpl implements HelpService {
     @Autowired
     HelpMapper helpMapper;
-    private MessageSource messageSource;
+    MessageSource messageSource;
 
     @Override
     public int helpBoard(HelpDTO helpDTO) {

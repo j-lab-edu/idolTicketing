@@ -2,6 +2,7 @@ package com.IdolTicketing.controller;
 
 import com.IdolTicketing.aop.LoginCheck;
 import com.IdolTicketing.dto.BookDTO;
+import com.IdolTicketing.dto.UserResponseDTO;
 import com.IdolTicketing.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +26,14 @@ public class BookController {
                                      boolean isAdmin,
                                      @RequestBody BookDTO bookDTO) {
 
-        if (userId.equals(bookDTO.getUserId())) {
+        if (userId.equals(bookDTO.getUserId()))
             bookService.createBook(bookDTO);
-        } else {
-            return new ResponseEntity<>("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
-        }
+        else
+            throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
+                    .code(900)
+                    .massage("잘못된 접근입니다.")
+                    .build()));
+
         return new ResponseEntity<>("예매되었습니다.", HttpStatus.OK);
     }
 
@@ -38,16 +42,19 @@ public class BookController {
     public ResponseEntity cancelBook(String userId,
                                      boolean isAdmin,
                                      @RequestBody BookDTO bookDTO) {
-        if (userId.equals(bookDTO.getUserId())) {
+        if (userId.equals(bookDTO.getUserId()))
             bookService.cancelBook(bookDTO);
-        } else {
-            return new ResponseEntity<>("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
-        }
+        else
+            throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
+                    .code(900)
+                    .massage("잘못된 접근입니다.")
+                    .build()));
+
         return new ResponseEntity<>("취소되었습니다.", HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    @LoginCheck(types = {LoginCheck.Role.USER})
+    @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity getBook(String userId,
                                   boolean isAdmin,
                                   @PathVariable int id) {
@@ -61,14 +68,16 @@ public class BookController {
                                        boolean isAdmin,
                                        @PathVariable int id) {
 
-        if (bookService.completeBook(id) != 0) {
+        if (bookService.completeBook(id) != 0)
             return new ResponseEntity<>("사용되었습니다.", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
-        }
+        else
+            throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
+                    .code(900)
+                    .massage("잘못된 접근입니다.")
+                    .build()));
     }
 
-    @Scheduled(cron = "0 0 0/1 * * *")
+    @Scheduled(cron = "0 1 0 * * *")
     public void scheduleExpiredBook() {
         bookService.scheduleExpiredBook();
     }

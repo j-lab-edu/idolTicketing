@@ -1,7 +1,11 @@
 package com.IdolTicketing.service.Impl;
 
 import com.IdolTicketing.dto.BookDTO;
+import com.IdolTicketing.dto.ContentDTO;
+import com.IdolTicketing.exception.CCategoryNotFoundException;
+import com.IdolTicketing.exception.CNameNotFoundException;
 import com.IdolTicketing.mapper.BookMapper;
+import com.IdolTicketing.mapper.ContentMapper;
 import com.IdolTicketing.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -12,10 +16,18 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     @Autowired
     BookMapper bookMapper;
-    private MessageSource messageSource;
+    ContentMapper contentMapper;
+    MessageSource messageSource;
 
     @Override
     public int createBook(BookDTO bookDTO) {
+        ContentDTO contentDTO = contentMapper.getContentById(bookDTO.getContentId());
+        bookDTO.setExpireTime(contentDTO.getDeadLine());
+        if (bookDTO.getCategory() == null)
+            throw new CCategoryNotFoundException("");
+        else if (bookDTO.getName() == null)
+            throw new CNameNotFoundException("");
+
         bookDTO.setName(messageSource.getMessage("books.name", null, LocaleContextHolder.getLocale()));
         return bookMapper.createBook(bookDTO);
     }

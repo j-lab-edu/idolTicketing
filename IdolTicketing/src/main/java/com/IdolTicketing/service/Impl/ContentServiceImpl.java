@@ -19,7 +19,7 @@ import java.util.List;
 public class ContentServiceImpl implements ContentService {
     @Autowired
     ContentMapper contentMapper;
-    private MessageSource messageSource;
+    MessageSource messageSource;
 
     @Override
     public int createContent(ContentDTO contentDTO) {

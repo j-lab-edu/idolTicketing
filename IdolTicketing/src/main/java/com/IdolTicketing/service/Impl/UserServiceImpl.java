@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
-    private MessageSource messageSource;
+    MessageSource messageSource;
 
     @Override
     public int register(UserDTO userDTO) {
