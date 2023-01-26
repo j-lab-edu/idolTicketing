@@ -67,10 +67,10 @@ public class UserController {
         if (userId.equals(userDTO.getUserId()))
             userService.update(userDTO);
         else
-            return new ResponseEntity<>(UserResponseDTO.builder()
-                    .code(402)
-                    .massage("실패했습니다.")
-                    .build(), HttpStatus.BAD_REQUEST);
+            throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
+                    .code(900)
+                    .massage("잘못된 접근입니다.")
+                    .build()));
 
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
@@ -81,14 +81,14 @@ public class UserController {
                                     boolean isAdmin,
                                     HttpSession session,
                                     @RequestBody UserDTO userDTO) {
-        if (userId.equals(userDTO.getUserId())) {
+        if (userId.equals(userDTO.getUserId()))
             SessionUtil.clear(session);
-        } else {
-            return new ResponseEntity<>(UserResponseDTO.builder()
-                    .code(402)
-                    .massage("실패했습니다.")
-                    .build(), HttpStatus.BAD_REQUEST);
-        }
+        else
+            throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
+                    .code(900)
+                    .massage("잘못된 접근입니다.")
+                    .build()));
+
         return new ResponseEntity<>("로그아웃 되었습니다.", HttpStatus.OK);
     }
 
@@ -97,14 +97,14 @@ public class UserController {
     public ResponseEntity<?> delete(String userId,
                                     boolean isAdmin,
                                     @RequestBody UserDTO userDTO) {
-        if (userId.equals(userDTO.getUserId())) {
+        if (userId.equals(userDTO.getUserId()))
             userService.delete(userDTO);
-        } else {
-            return new ResponseEntity<>(UserResponseDTO.builder()
-                    .code(402)
-                    .massage("실패했습니다.")
-                    .build(), HttpStatus.BAD_REQUEST);
-        }
+        else
+            throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
+                    .code(900)
+                    .massage("잘못된 접근입니다.")
+                    .build()));
+
         return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
     }
 

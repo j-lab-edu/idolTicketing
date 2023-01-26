@@ -8,13 +8,15 @@ import com.IdolTicketing.mapper.BookMapper;
 import com.IdolTicketing.mapper.ContentMapper;
 import com.IdolTicketing.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BookServiceImpl implements BookService {
     @Autowired
     BookMapper bookMapper;
-   // private MessageSource messageSource;
+    private MessageSource messageSource;
 
     @Autowired
     ContentMapper contentMapper;
@@ -23,7 +25,6 @@ public class BookServiceImpl implements BookService {
     public int createBook(BookDTO bookDTO) {
         ContentDTO contentDTO = contentMapper.getContentById(bookDTO.getContentId());
         bookDTO.setExpireTime(contentDTO.getDeadLine());
-        //bookDTO.setName(messageSource.getMessage("books.name", null, LocaleContextHolder.getLocale()));
         if(bookDTO.getCategory()==null){
             throw new CCategoryNotFoundException ("");
         }else if(bookDTO.getName()==null){
@@ -34,7 +35,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int cancelBook(BookDTO bookDTO) {
-        //bookDTO.setName(messageSource.getMessage("books.name", null, LocaleContextHolder.getLocale()));
         return bookMapper.cancelBook(bookDTO);
     }
 

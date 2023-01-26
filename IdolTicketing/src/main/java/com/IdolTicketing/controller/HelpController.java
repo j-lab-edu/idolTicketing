@@ -2,6 +2,7 @@ package com.IdolTicketing.controller;
 
 import com.IdolTicketing.aop.LoginCheck;
 import com.IdolTicketing.dto.HelpDTO;
+import com.IdolTicketing.dto.UserResponseDTO;
 import com.IdolTicketing.service.HelpService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,11 @@ public class HelpController {
                                     @RequestBody HelpDTO helpDTO) {
         if (userId.equals(helpDTO.getUserId()))
             helpService.helpBoard(helpDTO);
-         else
-            return new ResponseEntity("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+        else
+            throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
+                    .code(900)
+                    .massage("잘못된 접근입니다.")
+                    .build()));
 
         return new ResponseEntity<>(helpDTO, HttpStatus.OK);
     }
@@ -40,7 +44,10 @@ public class HelpController {
         if (userId.equals(helpDTO.getUserId()))
             helpService.updateBoard(helpDTO);
         else
-            return new ResponseEntity("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+            throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
+                    .code(900)
+                    .massage("잘못된 접근입니다.")
+                    .build()));
 
         return new ResponseEntity<>(helpDTO, HttpStatus.OK);
     }
@@ -48,13 +55,16 @@ public class HelpController {
     @DeleteMapping("/{deleteAdmin}")
     @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity deleteBoard(String userId,
-                                           boolean isAdmin,
-                                           @RequestBody HelpDTO helpDTO) {
-        if (userId.equals(helpDTO.getUserId())&&isAdmin){
+                                      boolean isAdmin,
+                                      @RequestBody HelpDTO helpDTO) {
+        if (userId.equals(helpDTO.getUserId()) && isAdmin)
             helpService.deleteBoard(helpDTO);
-        } else {
-            return new ResponseEntity("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
-        }
+        else
+            throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
+                    .code(900)
+                    .massage("잘못된 접근입니다.")
+                    .build()));
+
         return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
     }
 
@@ -63,10 +73,13 @@ public class HelpController {
     public ResponseEntity getBoard(String userId,
                                    boolean isAdmin,
                                    @PathVariable int id) {
-        if(id == 0 ){
-            return new ResponseEntity<>("없는 정보입니다.",HttpStatus.BAD_REQUEST);
-        }else
-        return new ResponseEntity<>((helpService.getBoard(id)), HttpStatus.OK);
+        if (id == 0)
+            throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
+                    .code(900)
+                    .massage("잘못된 접근입니다.")
+                    .build()));
+        else
+            return new ResponseEntity<>((helpService.getBoard(id)), HttpStatus.OK);
     }
 
 }
