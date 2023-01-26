@@ -18,6 +18,7 @@ public class BookDTO {
     private int id;
     private BookState bookState;
     private Date expireTime;
+    private Integer contentId;
 
     public BookDTO(String userId, String name, Date createTime, Date updateTime, int id) {
         this.userId = userId;

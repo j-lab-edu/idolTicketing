@@ -33,8 +33,14 @@
     </delete>
 
     <select id="getContent" resultType="com.IdolTicketing.dto.ContentDTO">
-        SELECT * FROM content where id=#{id};
+        SELECT * FROM content where name=#{name};
     </select>
+
+    <select id="getContentById" resultType="com.IdolTicketing.dto.ContentDTO">
+        SELECT * FROM content where id=#{contentId};
+    </select>
+
+
 
     <select id="selectContents" resultType="map">
         SELECT * FROM content

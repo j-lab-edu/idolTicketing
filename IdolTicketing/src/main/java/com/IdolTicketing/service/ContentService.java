@@ -14,5 +14,7 @@ public interface ContentService {
 
     ContentDTO getContent(String name);
 
+    ContentDTO getContentById(Integer contentId);
+
     List<ContentDTO> selectContents(ContentSearchDTO contentSearchDTO);
 }

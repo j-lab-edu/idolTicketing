@@ -68,7 +68,7 @@ public class BookController {
         }
     }
 
-    @Scheduled(cron = "0 0 0/1 * * *")
+    @Scheduled(cron = "0 1 0 * * *")
     public void scheduleExpiredBook() {
         bookService.scheduleExpiredBook();
     }

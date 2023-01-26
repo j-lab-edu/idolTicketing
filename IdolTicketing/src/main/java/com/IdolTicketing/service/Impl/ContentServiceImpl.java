@@ -36,6 +36,12 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
+    public ContentDTO getContentById(Integer
+                                                 contentId) {
+        return contentMapper.getContentById(contentId);
+    }
+
+    @Override
     public List<ContentDTO> selectContents(ContentSearchDTO contentSearchDTO) {
         return contentMapper.selectContents(contentSearchDTO);
     }
