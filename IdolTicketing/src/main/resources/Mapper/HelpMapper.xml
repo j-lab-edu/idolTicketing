@@ -23,7 +23,7 @@
 
     <delete id="deleteBoard">
         DELETE from help
-        WHERE id = #{id}
+        WHERE userId = #{userId}
     </delete>
 
 </mapper>

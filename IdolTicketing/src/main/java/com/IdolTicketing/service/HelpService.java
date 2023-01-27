@@ -9,6 +9,6 @@ public interface HelpService {
 
     int deleteBoard(HelpDTO helpDTO);
 
-    HelpDTO getBoard(int id);
+    HelpDTO getBoard(Integer id);
 
 }

@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     @Autowired
     BookMapper bookMapper;
+    @Autowired
     ContentMapper contentMapper;
+    @Autowired
     MessageSource messageSource;
 
     @Override

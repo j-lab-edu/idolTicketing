@@ -19,6 +19,7 @@ import java.util.List;
 public class ContentServiceImpl implements ContentService {
     @Autowired
     ContentMapper contentMapper;
+    @Autowired
     MessageSource messageSource;
 
     @Override
@@ -32,24 +33,24 @@ public class ContentServiceImpl implements ContentService {
         else if (contentDTO.getSeat() == null)
             throw new CSeatNotFound("");
 
-        contentDTO.setSeat(messageSource.getMessage("content.seat", null, LocaleContextHolder.getLocale()));
-        contentDTO.setName(messageSource.getMessage("content.name", null, LocaleContextHolder.getLocale()));
-        contentDTO.setLocation(messageSource.getMessage("content.location", null, LocaleContextHolder.getLocale()));
+        contentDTO.setSeat(messageSource.getMessage("contents.seat", null, LocaleContextHolder.getLocale()));
+        contentDTO.setName(messageSource.getMessage("contents.name", null, LocaleContextHolder.getLocale()));
+        contentDTO.setLocation(messageSource.getMessage("contents.location", null, LocaleContextHolder.getLocale()));
 
         return contentMapper.createContent(contentDTO);
     }
 
     @Override
     public int patchContent(ContentDTO contentDTO) {
-        contentDTO.setSeat(messageSource.getMessage("content.seat", null, LocaleContextHolder.getLocale()));
-        contentDTO.setName(messageSource.getMessage("content.name", null, LocaleContextHolder.getLocale()));
-        contentDTO.setLocation(messageSource.getMessage("content.location", null, LocaleContextHolder.getLocale()));
+        contentDTO.setSeat(messageSource.getMessage("contents.seat", null, LocaleContextHolder.getLocale()));
+        contentDTO.setName(messageSource.getMessage("contents.name", null, LocaleContextHolder.getLocale()));
+        contentDTO.setLocation(messageSource.getMessage("contents.location", null, LocaleContextHolder.getLocale()));
         return contentMapper.patchContent(contentDTO);
     }
 
     @Override
-    public ContentDTO deleteContent(ContentDTO contentDTO) {
-        return contentMapper.deleteContent(contentDTO);
+    public void deleteContent(ContentDTO contentDTO) {
+       contentMapper.deleteContent(contentDTO);
     }
 
     @Override

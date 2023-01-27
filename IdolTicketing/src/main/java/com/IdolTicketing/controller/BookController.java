@@ -37,7 +37,7 @@ public class BookController {
         return new ResponseEntity<>("예매되었습니다.", HttpStatus.OK);
     }
 
-    @PatchMapping("/cancel")
+    @PatchMapping("/{id}")
     @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity cancelBook(String userId,
                                      boolean isAdmin,

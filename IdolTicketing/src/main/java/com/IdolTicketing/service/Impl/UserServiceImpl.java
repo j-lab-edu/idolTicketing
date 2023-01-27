@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
+    @Autowired
     MessageSource messageSource;
 
     @Override
@@ -22,7 +23,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO login(UserDTO userDTO) {
-        userDTO.setAddress(messageSource.getMessage("users.address", null, LocaleContextHolder.getLocale()));
         return userMapper.loginUser(userDTO);
     }
 
@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int delete(UserDTO userDTO) {
-        userDTO.setAddress(messageSource.getMessage("users.address", null, LocaleContextHolder.getLocale()));
         return userMapper.deleteUser(userDTO);
     }
 }

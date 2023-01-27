@@ -9,7 +9,7 @@ public interface HelpMapper {
 
     int updateBoard(HelpDTO helpDTO);
 
-    HelpDTO getBoard(int id);
+    HelpDTO getBoard(Integer id);
 
     int deleteBoard(HelpDTO helpDTO);
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class HelpServiceImpl implements HelpService {
     @Autowired
     HelpMapper helpMapper;
+    @Autowired
     MessageSource messageSource;
 
     @Override
@@ -23,7 +24,7 @@ public class HelpServiceImpl implements HelpService {
         else if(helpDTO.getTitle()==null)
             throw new CTitleNotFound("");
 
-        helpDTO.setTitle(messageSource.getMessage("helptitle", null, LocaleContextHolder.getLocale()));
+        helpDTO.setTitle(messageSource.getMessage("helps.title", null, LocaleContextHolder.getLocale()));
         return helpMapper.createBoard(helpDTO);
     }
 
@@ -39,7 +40,7 @@ public class HelpServiceImpl implements HelpService {
     }
 
     @Override
-    public HelpDTO getBoard(int id) {
+    public HelpDTO getBoard(Integer id) {
         return helpMapper.getBoard(id);
     }
 
