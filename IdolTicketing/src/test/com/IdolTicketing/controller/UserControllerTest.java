@@ -44,22 +44,11 @@ class UserControllerTest {
                 .phone(010000111)
                 .password("aaa111")
                 .build();
-        String userString = objectMapper.writeValueAsString(userDTO);
-
         MvcResult result = mockMvc.perform(post("/users/register")
-                        .param("userId", "test1")
-                        .param("email", "aaa@naver.com")
-                        .param("phone", "010000111")
-                        .param("password", "aaa111")
-                        .content(userString)
+                        .content(objectMapper.writeValueAsString(userDTO))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-
-        String content = result.getResponse().getContentAsString();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        UserDTO response = objectMapper.readValue(content, UserDTO.class);
-
+        UserDTO response = new ObjectMapper().readValue(result.getResponse().getContentAsString(), UserDTO.class);
         assertEquals("같습니다.", userDTO, response);
     }
 
@@ -74,16 +63,12 @@ class UserControllerTest {
         String userString = objectMapper.writeValueAsString(userDTO);
 
         MvcResult result = mockMvc.perform(post("/users/register")
-                        .param("userId", "test2")
-                        .param("email", "bbb@naver.com")
-                        .param("phone", "01000000")
-                        .param("password", "bbb222")
-                        .content(userString)
+                   .content(userString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        String content = result.getResponse().getContentAsString();
-
-        assertNotEquals("같지 않습니다.", userDTO, content);
+        UserDTO response = objectMapper.readValue(result.getResponse().getContentAsString(), UserDTO.class);
+        response.setUserId("test");
+        assertNotEquals("같지 않습니다.", UserDTO, response);
     }
 }

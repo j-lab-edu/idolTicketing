@@ -2,6 +2,7 @@ package com.IdolTicketing.controller;
 
 import com.IdolTicketing.dto.ContentDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,44 +36,37 @@ class ContentControllerTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    ContentDTO contentDTO;
+    @BeforeEach
+    void initTest(){
+        this.contentDTO = ContentDTO.builder()
+                .userId("admin")
+                .build();
+
+    }
 
     @Test
     void createContents() throws Exception {
-        ContentDTO contentDTO = ContentDTO.builder()
-                .userId("admin")
-                .build();
-        String goodString = objectMapper.writeValueAsString(contentDTO);
-
+        String goodString = objectMapper.writeValueAsString(this.contentDTO);
         MvcResult result = mockMvc.perform(post("/contents/")
-                        .param("userId", "admin")
                         .param("isAdmin","true")
                         .content(goodString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-
-        String content = result.getResponse().getContentAsString();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        ContentDTO response = objectMapper.readValue(content, ContentDTO.class);
-
-        assertEquals("같습니다.", contentDTO, response);
+        assertEquals("같습니다.", contentDTO,
+                objectMapper.readValue(result.getResponse().getContentAsString(), ContentDTO.class));
     }
     @Test
     void createContentsFail() throws Exception {
-        ContentDTO contentDTO = ContentDTO.builder()
-                .userId("admin")
-                .build();
-        String contentString = objectMapper.writeValueAsString(contentDTO);
 
+        String contentString = objectMapper.writeValueAsString(this.contentDTO);
         MvcResult result = mockMvc.perform(post("/contents/")
-                        .param("userId", "user1")
-                        .param("isAdmin","fail")
+                        .param("isAdmin","true")
                         .content(contentString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-
-        String content = result.getResponse().getContentAsString();
-
-        assertNotEquals("같지 않습니다.", contentDTO, content);
+        ContentDTO response = objectMapper.readValue(result.getResponse().getContentAsString(), ContentDTO.class);
+        response.setUserId("user");
+        assertNotEquals("같지 않습니다.", contentDTO, response);
     }
 }

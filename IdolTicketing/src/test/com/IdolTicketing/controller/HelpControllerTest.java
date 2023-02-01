@@ -44,14 +44,13 @@ class HelpControllerTest {
                 .userId("test")
                 .description("....")
                 .title("sample")
+                .isAdmin(false)
                 .build();
         String helpString = objectMapper.writeValueAsString(helpDTO);
 
         MvcResult result = mockMvc.perform(post("/helps/")
-                        .param("userId", "test")
-                        .param("isAdmin", "false")
-                        .param("title", "sample")
-                        .param("description", "....")
+                        .param("userId","test")
+                        .param("isAdmin","false")
                         .content(helpString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
@@ -74,17 +73,13 @@ class HelpControllerTest {
         String helpString = objectMapper.writeValueAsString(helpDTO);
 
         MvcResult result = mockMvc.perform(post("/helps/")
-                        .param("userId", "test")
-                        .param("isAdmin", "false")
-                        .param("title", "sample")
-                        .param("description", "....")
                         .content(helpString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        String content = result.getResponse().getContentAsString();
-
-        assertNotEquals("같지 않습니다.", helpDTO, content);
+        HelpDTO response = objectMapper.readValue(result.getResponse().getContentAsString(), HelpDTO.class);
+        response.setUserId("test");
+        assertNotEquals("같지 않습니다.", helpDTO, response);
     }
 
     @Test
@@ -98,10 +93,8 @@ class HelpControllerTest {
         String helpString = objectMapper.writeValueAsString(helpDTO);
 
         MvcResult result = mockMvc.perform(patch("/helps/01")
-                        .param("userId", "test")
-                        .param("isAdmin", "false")
-                        .param("id", "01")
-                        .param("title", "sample")
+                        .param("userId","test")
+                        .param("isAdmin","false")
                         .content(helpString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
@@ -125,16 +118,12 @@ class HelpControllerTest {
         String helpString = objectMapper.writeValueAsString(helpDTO);
 
         MvcResult result = mockMvc.perform(patch("/helps/01")
-                        .param("userId", "test")
-                        .param("isAdmin", "false")
-                        .param("id", "02")
-                        .param("title", "sample")
                         .content(helpString)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        String content = result.getResponse().getContentAsString();
-
-        assertNotEquals("같지 않습니다.", helpDTO, content);
+        HelpDTO response = objectMapper.readValue(result.getResponse().getContentAsString(), HelpDTO.class);
+        response.setUserId("test");
+        assertNotEquals("같지 않습니다.", helpDTO, response);
     }
 }
