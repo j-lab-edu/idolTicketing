@@ -4,7 +4,6 @@ import com.IdolTicketing.SessionUtil;
 import com.IdolTicketing.aop.LoginCheck;
 import com.IdolTicketing.dto.UserDTO;
 import com.IdolTicketing.dto.UserResponseDTO;
-import com.IdolTicketing.exception.CUserNotFoundException;
 import com.IdolTicketing.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +42,12 @@ public class UserController {
                                    HttpSession session) {
         UserDTO userInfo = userService.login(userDTO);
         if (userInfo == null) {
-            throw new CUserNotFoundException("없는 회원입니다.");
-
+            return new ResponseEntity<>(UserResponseDTO.builder()
+                    .code(401)
+                    .massage("다시 로그인해주세요")
+                    .build(), HttpStatus.BAD_REQUEST);
         }
+
         if (!userInfo.isAdmin()) {
             SessionUtil.setLoginUserId(session, userInfo.getUserId());
             return new ResponseEntity<>(UserResponseDTO.builder()
