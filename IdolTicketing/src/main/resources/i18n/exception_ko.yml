@@ -1,14 +1,21 @@
 # exception_ko.yml
 #i18n
 books:
+  category: "팬미팅"
   name: "슈퍼주니어"
+  bookState : "예매 ??"
 contents:
+  category: "팬미팅"
   name: "슈퍼주니어"
   location: "용인"
   seat: "가"
 helps:
   title: "문의합니다."
+  description : "안녕하세요,,,"
 users:
+  userId : "테스트"
+  name : "가나다"
+  email : "테스트@지메일"
   address: "용인"
 
 #book

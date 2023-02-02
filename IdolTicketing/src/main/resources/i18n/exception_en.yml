@@ -1,11 +1,18 @@
 # exception_en.yml
 books:
+  category :  "FANMEETING"
   name : "super junior"
+  bookState : "book ??"
 contents :
+  category : "FANMEETING"
   name:  "super junior"
   location: "Yong-In"
   seat: "A"
 helps :
   title : "help me"
+  description : "hello its me,,,"
 users :
+  userId : "test"
+  name : "ABC"
+  email : "test@gmail.com"
   address : "Yong-In"
