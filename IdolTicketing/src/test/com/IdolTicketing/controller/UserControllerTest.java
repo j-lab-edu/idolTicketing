@@ -67,8 +67,8 @@ class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        String content = result.getResponse().getContentAsString();
-
-        assertNotEquals("같지 않습니다.", userDTO, content);
+        UserDTO response = objectMapper.readValue(result.getResponse().getContentAsString(), UserDTO.class);
+        response.setUserId("test");
+        assertNotEquals("같지 않습니다.", UserDTO, response);
     }
 }

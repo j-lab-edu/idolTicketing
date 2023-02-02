@@ -12,9 +12,11 @@ public interface ContentMapper {
 
     int patchContent(ContentDTO contentDTO);
 
-    ContentDTO deleteContent(ContentDTO contentDTO);
+    void deleteContent(ContentDTO contentDTO);
 
     ContentDTO getContent(String name);
+
+    ContentDTO getContentById(Integer contentId);
 
     List<ContentDTO> selectContents(ContentSearchDTO contentSearchDTO);
 }
