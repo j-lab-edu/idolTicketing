@@ -51,17 +51,17 @@ public class AuthCheckAspect {
                 break;
             }
         }
-        if( Collections.list(((StandardSessionFacade) session).getAttributeNames()).size() >0){
+        if ( Collections.list(((StandardSessionFacade) session).getAttributeNames()).size() > 0) {
             if (sessionUserId == null) {
                 return new ResponseEntity<>(" 권한이 없습니다. ", HttpStatus.UNAUTHORIZED);
             }
         } {
             if (sessionUserId == null) {
-                return new ResponseEntity<>("로그인해주세요2",HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("로그인해주세요2", HttpStatus.BAD_REQUEST);
             }
         }
 
-        if (jp.getArgs() != null){
+        if (jp.getArgs() != null) {
             signatureArgs[0] = sessionUserId;
             signatureArgs[1] = isAdmin;
         }

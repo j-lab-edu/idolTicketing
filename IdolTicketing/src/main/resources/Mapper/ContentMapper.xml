@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.IdolTicketing.mapper.ContentMapper">
+    <insert id="createContent">
+        INSERT INTO content
+        ( name, price,description,date,location,seat,category,userId,deadLine)
+        VALUES
+        (#{name},#{price},#{description},#{date},#{location},#{seat},#{category},#{userId},#{deadLine})
+    </insert>
+
+    <update id="patchContent">
+        UPDATE content
+        SET
+        userId = #{userId},
+        description = #{description},
+        price = #{price},
+        category = #{category},
+        location = #{location},
+        date = #{date},
+        seat = #{seat},
+        deadLine = #{deadLine}
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectCategory" resultType="com.IdolTicketing.dto.ContentDTO">
+        SELECT * FROM content where category=#{category};
+    </select>
+
+    <delete id="deleteContent">
+        DELETE FROM content
+        WHERE id = #{id}
+    </delete>
+
+    <select id="getContent" resultType="com.IdolTicketing.dto.ContentDTO">
+        SELECT * FROM content where id=#{id};
+    </select>
+
+    <select id="selectContents" resultType="map">
+        SELECT * FROM content
+        where category=#{category}
+        <choose>
+        <when test="keyword != null">
+            and name like CONCAT('%',#{keyword},'%')
+        </when>
+        </choose>
+        ORDER BY #{sortType} ${upDownType}
+        LIMIT #{limitCount}
+    </select>
+
+</mapper>
