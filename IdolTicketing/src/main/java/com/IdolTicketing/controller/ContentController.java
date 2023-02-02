@@ -28,11 +28,11 @@ public class ContentController {
     public ResponseEntity createContents(String userId,
                                          boolean isAdmin,
                                          @RequestBody ContentDTO contentDTO) {
+        contentService.createContent(contentDTO);
         if (!isAdmin)
             throw new CNAdminException("");
         else
-            contentService.createContent(contentDTO);
-        return new ResponseEntity<>(contentDTO, HttpStatus.OK);
+            return new ResponseEntity<>(contentDTO, HttpStatus.OK);
 
     }
 
@@ -41,12 +41,11 @@ public class ContentController {
     public ResponseEntity<?> patchContent(String userId,
                                           boolean isAdmin,
                                           @RequestBody ContentDTO contentDTO) {
-
+        contentService.patchContent(contentDTO);
         if (!isAdmin)
             throw new CNAdminException("");
         else
-            contentService.patchContent(contentDTO);
-        return new ResponseEntity<>("수정되었습니다.", HttpStatus.OK);
+            return new ResponseEntity<>("수정되었습니다.", HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -54,17 +53,16 @@ public class ContentController {
     public ResponseEntity<?> deleteContents(String userId,
                                             boolean isAdmin,
                                             @RequestBody ContentDTO contentDTO) {
+        contentService.deleteContent(contentDTO);
         if (!isAdmin)
             throw new CNAdminException("");
         else
-            contentService.deleteContent(contentDTO);
-        return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
+            return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<?> getContent(String userId,
-                                        boolean isAdmin,
-                                        @RequestParam String name) {
+    public ResponseEntity<?> getContent(@RequestParam String name) {
+
         if (contentService.getContent(name) == null)
             throw new RuntimeException("없는 정보입니다");
         else

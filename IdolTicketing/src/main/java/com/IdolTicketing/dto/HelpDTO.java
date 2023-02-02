@@ -6,7 +6,7 @@ import lombok.Data;
 @Builder
 @Data
 public class HelpDTO {
-    private int id;
+    private Integer id;
     private String title;
     private String description;
     private String userId;
@@ -15,7 +15,7 @@ public class HelpDTO {
     public HelpDTO() {
     }
 
-    public HelpDTO(int id, String title, String description, String userId, Boolean isAdmin) {
+    public HelpDTO(Integer id, String title, String description, String userId, Boolean isAdmin) {
         this.id = id;
         this.title = title;
         this.description = description;

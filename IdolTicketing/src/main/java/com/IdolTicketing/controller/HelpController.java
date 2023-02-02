@@ -52,12 +52,12 @@ public class HelpController {
         return new ResponseEntity<>(helpDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{deleteAdmin}")
+    @DeleteMapping("/{id}")
     @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity deleteBoard(String userId,
                                       boolean isAdmin,
                                       @RequestBody HelpDTO helpDTO) {
-        if (userId.equals(helpDTO.getUserId()) && isAdmin)
+        if (userId.equals(helpDTO.getUserId()) || isAdmin)
             helpService.deleteBoard(helpDTO);
         else
             throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
@@ -72,14 +72,9 @@ public class HelpController {
     @LoginCheck(types = {LoginCheck.Role.ADMIN, LoginCheck.Role.USER})
     public ResponseEntity getBoard(String userId,
                                    boolean isAdmin,
-                                   @PathVariable int id) {
-        if (id == 0)
-            throw new RuntimeException(String.valueOf(UserResponseDTO.builder()
-                    .code(900)
-                    .massage("잘못된 접근입니다.")
-                    .build()));
-        else
-            return new ResponseEntity<>((helpService.getBoard(id)), HttpStatus.OK);
+                                   @RequestParam Integer id) {
+        helpService.getBoard(id);
+      return new ResponseEntity<>(helpService.getBoard(id), HttpStatus.OK);
     }
 
 }

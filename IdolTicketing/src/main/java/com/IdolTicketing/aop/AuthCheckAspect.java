@@ -37,7 +37,7 @@ public class AuthCheckAspect {
             // ADMIN상태인데 USER만 or USER상태인데 ADMIN만 가능한 API를 호출했을때 발생시켜야한다. // 2. DB MYSQL 데이터가 있지만, 잘못된 요청
             if ((!isAdmin && loginCheck.toString().contains("ADMIN") && !loginCheck.toString().contains("USER")) ||
                     (isAdmin && loginCheck.toString().contains("USER") && !loginCheck.toString().contains("ADMIN")))
-               throw new CNAdminException("");
+                throw new CNAdminException("");
         } else
             throw new CNLoginException("");
 

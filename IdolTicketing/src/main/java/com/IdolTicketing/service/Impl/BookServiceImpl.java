@@ -16,25 +16,27 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     @Autowired
     BookMapper bookMapper;
-    private MessageSource messageSource;
-
     @Autowired
     ContentMapper contentMapper;
+    @Autowired
+    MessageSource messageSource;
 
     @Override
     public int createBook(BookDTO bookDTO) {
         ContentDTO contentDTO = contentMapper.getContentById(bookDTO.getContentId());
         bookDTO.setExpireTime(contentDTO.getDeadLine());
-        if(bookDTO.getCategory()==null){
-            throw new CCategoryNotFoundException ("");
-        }else if(bookDTO.getName()==null){
+        if (bookDTO.getCategory() == null)
+            throw new CCategoryNotFoundException("");
+        else if (bookDTO.getName() == null)
             throw new CNameNotFoundException("");
-        }
+
+        bookDTO.setName(messageSource.getMessage("books.name", null, LocaleContextHolder.getLocale()));
         return bookMapper.createBook(bookDTO);
     }
 
     @Override
     public int cancelBook(BookDTO bookDTO) {
+        bookDTO.setName(messageSource.getMessage("books.name", null, LocaleContextHolder.getLocale()));
         return bookMapper.cancelBook(bookDTO);
     }
 
